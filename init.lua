@@ -1,8 +1,6 @@
+--- TODO: Welcome to my Neovim configuration!
 vim.g.mapleader = " "
 require("core.options")
-require("core.mappings")
-require("core.autocommands")
-require("colorify").run()
 
 -- bootstrap lazy and all plugins
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -24,6 +22,16 @@ require("lazy").setup({
 		{ import = "plugins.git" },
 		{ import = "plugins.ts" },
 		{ import = "plugins.ui" },
+		{ import = "plugins.ia" },
+		{ import = "plugins.dap" },
+		{ import = "plugins.db" },
 		{ import = "plugins.utils" },
+		{ import = "plugins.nvzone" },
+		{ import = "plugins.learn." },
 	},
 }, lazy_config)
+
+require("core.mappings")
+require("core.autocommands")
+require("colorify").run()
+require("themer").load_all_highlights()
