@@ -25,7 +25,7 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
 1. Clona este repositorio en tu directorio de configuración de Neovim:
 
    ```bash
-   git clone https://github.com/alexlafroscia/nvim ~/.config/nvim
+   git clone https://github.com/nyxkam/nvim ~/.config/nvim
    ```
 
 1. Ingresa al directorio del repositorio y ejecuta neovim:
@@ -38,71 +38,6 @@ Antes de comenzar, asegúrate de tener instalados los siguientes requisitos:
 
 El repositorio está dividido en varios directorios, cada uno de ellos representa
 un plugin o una carpeta de configuración.
-
-```bash
-nvim/
-├── init.lua
-├── lazy-lock.json
-├── LICENSE.md
-├── lua/
-│   ├── core/
-│   │   ├── autocommands.lua
-│   │   ├── colors.lua
-│   │   ├── functions.lua
-│   │   ├── lazy.lua
-│   │   ├── mappings.lua
-│   │   └── options.lua
-│   ├── hls/
-│   └── plugins/
-│       ├── comment/
-│       │   ├── comments.lua
-│       │   └── todo_comments.lua
-│       ├── dap/
-│       │   ├── adapters/
-│       │   └── init.lua
-│       ├── git/
-│       │   ├── diffview.lua
-│       │   └── gitsigns.lua
-│       ├── ia/
-│       │   ├── codeium.lua
-│       │   └── supermaven.lua
-│       ├── learn/
-│       │   └── leetcode.lua
-│       ├── lsp/
-│       │   ├── autopair.lua
-│       │   ├── cmp.lua
-│       │   ├── conform.lua
-│       │   ├── lspconfig.lua
-│       │   ├── lspsaga.lua
-│       │   ├── luasnip.lua
-│       │   └── mason.lua
-│       ├── nvzone/
-│       │   ├── minty.lua
-│       │   ├── showkeys.lua
-│       │   ├── timerly.lua
-│       │   └── typr.lua
-│       ├── ts/
-│       │   ├── indent.lua
-│       │   ├── rainbow.lua
-│       │   └── treesitter.lua
-│       ├── ui/
-│       │   ├── bufferline.lua
-│       │   ├── lualine.lua
-│       │   ├── markdownview.lua
-│       │   └── prism.lua
-│       └── utils/
-│           ├── alpha.lua
-│           ├── devicons.lua
-│           ├── dressing.lua
-│           ├── noice.lua
-│           ├── notify.lua
-│           ├── nvimtree.lua
-│           ├── project.lua
-│           ├── telescope.lua
-│           ├── terminal.lua
-│           └── whichkey.lua
-└── README.md
-```
 
 - `init.lua`: archivo principal de configuración de Neovim.
 - `lua/`: directorio donde se encuentran los archivos de configuración.
@@ -134,4 +69,3 @@ Aqui hay una lsita con algunos de los plugins que utilizo en mi configuración.
 
 ## Temas
 
-Para los temas usé el plugin [prism](https://github.com/namishh/prism) :

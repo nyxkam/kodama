@@ -4,6 +4,7 @@ return {
 	cmd = { "LspInfo", "LspInstall", "LspUninstall", "LspStart" },
 	config = function()
 		local lspconfig = require("lspconfig")
+		local map = vim.keymap.set
 
 		local M = {}
 
@@ -13,9 +14,37 @@ return {
 			end
 		end
 
-		M.on_attach = function(client, _)
+		M.on_attach = function(client, bufnr)
 			client.server_capabilities.documentFormattingProvider = true
 			client.server_capabilities.documentRangeFormattingProvider = true
+			local function opts(desc)
+				return { buffer = bufnr, desc = "LSP " .. desc }
+			end
+
+			local mappings = {
+				{ "n", "gD", vim.lsp.buf.declaration, "Go to declaration" },
+				{ "n", "gd", vim.lsp.buf.definition, "Go to definition" },
+				{ "n", "gi", vim.lsp.buf.implementation, "Go to implementation" },
+				{ "n", "<leader>sh", vim.lsp.buf.signature_help, "Show signature help" },
+				{ "n", "<leader>wa", vim.lsp.buf.add_workspace_folder, "Add workspace folder" },
+				{ "n", "<leader>wr", vim.lsp.buf.remove_workspace_folder, "Remove workspace folder" },
+				{
+					"n",
+					"<leader>wl",
+					function()
+						print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+					end,
+					"List workspace folders",
+				},
+				{ "n", "<leader>D", vim.lsp.buf.type_definition, "Go to type definition" },
+				{ "n", "<leader>ra", require("plugins.lsp.extra.renamer"), "Renamer" },
+				{ { "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action" },
+				{ "n", "gr", vim.lsp.buf.references, "Show references" },
+			}
+
+			for _, m in ipairs(mappings) do
+				map(m[1], m[2], m[3], opts(m[4]))
+			end
 		end
 
 		M.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -46,9 +75,9 @@ return {
 			signs = { text = { [1] = " ", [2] = " ", [3] = " ", [4] = "󰌵" } },
 			float = {
 				suffix = "",
-				header = { "󱊢  Diagnostics", "String" },
+				header = { "  Diagnostics", "String" },
 				prefix = function(_, _, _)
-					return "  ", "String"
+					return " 󰶻 ", "String"
 				end,
 			},
 		})
@@ -75,13 +104,13 @@ return {
 			"ts_ls",
 			"clangd",
 			"cssls",
-			"omnisharp",
 			"texlab",
 			"jsonls",
 			"lemminx",
 			"tailwindcss",
 			"yamlls",
 			"texlab",
+			"marksman",
 		}
 
 		for _, k in ipairs(servers) do

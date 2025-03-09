@@ -1,4 +1,3 @@
---- TODO: Welcome to my Neovim configuration!
 vim.g.mapleader = " "
 require("core.options")
 
@@ -27,7 +26,7 @@ require("lazy").setup({
 		{ import = "plugins.db" },
 		{ import = "plugins.utils" },
 		{ import = "plugins.nvzone" },
-		{ import = "plugins.learn." },
+		{ import = "plugins.learn" },
 	},
 }, lazy_config)
 

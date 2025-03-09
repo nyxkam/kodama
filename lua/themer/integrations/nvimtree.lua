@@ -3,7 +3,7 @@ local colors = require("themer").get_theme_table("theme")
 return {
 	NvimTreeEmptyFolderName = { fg = colors.color4 },
 	NvimTreeEndOfBuffer = { fg = colors.darker },
-	NvimTreeFolderIcon = { fg = colors.color11 },
+	NvimTreeFolderIcon = { fg = colors.color3 },
 	NvimTreeFolderName = { fg = colors.color4 },
 	NvimTreeFolderArrowOpen = { fg = colors.color4 },
 	NvimTreeFolderArrowClosed = { fg = colors.comment },
