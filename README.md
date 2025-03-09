@@ -5,12 +5,12 @@ configuracipón presonsalizada para Neovim.
 
 ## Tabla de Contenidos
 
---[Requisitos](#requisitos)
---[Instalación](#instalaci%C3%B3n)
---[Estructura del Repositorio](#estructura-del-repositorio)
---[Plugins](#plugins)
---[Atajos](#atajos)
---[Licencia](#licencia)
+-[Requisitos](#requisitos)
+-[Instalación](#instalaci%C3%B3n)
+-[Estructura del Repositorio](#estructura-del-repositorio)
+-[Plugins](#plugins)
+-[Atajos](#atajos)
+-[Licencia](#licencia)
 
 ## Requisitos
 
