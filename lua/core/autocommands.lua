@@ -91,3 +91,14 @@ vim.api.nvim_create_autocmd("BufWritePost", {
 vim.api.nvim_create_user_command("Ranger", function()
 	require("core.functions").ranger_toggle()
 end, { desc = "Open/Toggle Ranger" })
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(args)
+		vim.schedule(function()
+			local client = vim.lsp.get_client_by_id(args.data.client_id)
+			if client then
+				require("plugins.lsp.extra.signature").setup(client, args.buf)
+			end
+		end)
+	end,
+})

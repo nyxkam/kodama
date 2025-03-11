@@ -11,8 +11,6 @@ end
 
 vim.opt.rtp:prepend(lazypath)
 
-local lazy_config = require("core.lazy")
-
 -- load plugins
 require("lazy").setup({
 	spec = {
@@ -28,7 +26,7 @@ require("lazy").setup({
 		{ import = "plugins.nvzone" },
 		{ import = "plugins.learn" },
 	},
-}, lazy_config)
+})
 
 require("core.mappings")
 require("core.autocommands")

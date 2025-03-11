@@ -1,9 +1,11 @@
 return {
 	"neovim/nvim-lspconfig",
+	dependencies = { "MunifTanjim/nui.nvim" },
 	event = { "BufReadPost", "BufNewFile" },
 	cmd = { "LspInfo", "LspInstall", "LspUninstall", "LspStart" },
 	config = function()
 		local lspconfig = require("lspconfig")
+		local signature = require("plugins.lsp.extra.signature")
 		local map = vim.keymap.set
 
 		local M = {}
@@ -17,11 +19,13 @@ return {
 		M.on_attach = function(client, bufnr)
 			client.server_capabilities.documentFormattingProvider = true
 			client.server_capabilities.documentRangeFormattingProvider = true
+			signature.setup(client, bufnr)
 			local function opts(desc)
 				return { buffer = bufnr, desc = "LSP " .. desc }
 			end
 
 			local mappings = {
+				{ "n", "K", vim.lsp.buf.hover, "Hover" },
 				{ "n", "gD", vim.lsp.buf.declaration, "Go to declaration" },
 				{ "n", "gd", vim.lsp.buf.definition, "Go to definition" },
 				{ "n", "gi", vim.lsp.buf.implementation, "Go to implementation" },
@@ -37,7 +41,7 @@ return {
 					"List workspace folders",
 				},
 				{ "n", "<leader>D", vim.lsp.buf.type_definition, "Go to type definition" },
-				{ "n", "<leader>ra", require("plugins.lsp.extra.renamer"), "Renamer" },
+				{ "n", "<leader>ra", require("plugins.lsp.extra.renamer").lsp_rename, "Renamer" },
 				{ { "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, "Code action" },
 				{ "n", "gr", vim.lsp.buf.references, "Show references" },
 			}
@@ -132,14 +136,7 @@ return {
 						globals = { "vim" },
 					},
 					workspace = {
-						library = {
-							vim.fn.expand("$VIMRUNTIME/lua"),
-							vim.fn.expand("$VIMRUNTIME/lua/vim/lsp"),
-							vim.fn.stdpath("data") .. "/lazy/lazy.nvim/lua/lazy",
-							"${3rd}/luv/library",
-						},
-						maxPreload = 100000,
-						preloadFileSize = 10000,
+						checkThirdParty = false,
 					},
 				},
 			},
