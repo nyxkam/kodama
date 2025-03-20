@@ -16,7 +16,7 @@ return {
 					highlight = "Directory",
 				},
 			},
-			buffer_close_icon = "",
+			buffer_close_icon = "",
 			close_command = "bdelete! %d",
 			right_mouse_command = "bdelete! %d",
 			left_mouse_command = "buffer %d",
