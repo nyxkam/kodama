@@ -1,21 +1,6 @@
 local colors = require("themer").get_theme_table("theme")
 local darken = require("themer.colors").blend
 
-local function darken_bg(color)
-	return darken(color, colors.black, 0.15)
-end
-
-local styles = {
-	Mode = colors.color4,
-	Filename = colors.color1,
-	Branch = colors.color13,
-	Lsp = colors.color2,
-	Tab = colors.color1,
-	Progress = colors.color13,
-	Location = colors.color11,
-	Dir = colors.color1,
-}
-
 local theme = {
 	LualineNothing = { bg = colors.black },
 	LualineNothing2 = { bg = colors.black },
@@ -34,15 +19,37 @@ local theme = {
 	LualineDiagnosticsWarnText = { fg = colors.color3, bg = colors.black },
 	LualineDiagnosticsInfoText = { fg = colors.color12, bg = colors.black },
 	LualineDiagnosticsHintText = { fg = colors.color14, bg = colors.black },
+	-- Grupos activos
+	LualineDotIcon = { bg = colors.color4, fg = colors.black },
+	LualineFilenameIcon = { bg = colors.cursorline, fg = darken(colors.foreground, colors.black, 0.6) },
+	LualineFilenameText = { bg = colors.cursorline, fg = darken(colors.foreground, colors.black, 0.6) },
+	LualineFilenameSeparator = { bg = colors.background, fg = colors.cursorline },
+	LualineDirIcon = { fg = colors.black, bg = colors.color9 },
+	LualineDirText = { fg = colors.color9, bg = darken(colors.color9, colors.black, 0.1) },
+	LualineDirSeparator = { bg = colors.black, fg = colors.color9 },
+	LualineModeIcon = { bg = colors.color12, fg = colors.black },
+	LualineModeSeparator = { bg = darken(colors.color12, colors.black, 0.1), fg = colors.color12 },
+	LualineModeSeparator2 = { bg = colors.cursorline, fg = darken(colors.color12, colors.black, 0.1) },
+	LualineModeText = { bg = darken(colors.color12, colors.black, 0.1), fg = colors.color12 },
+	LualineProgressIcon = { bg = colors.color2, fg = colors.black },
+	LualineProgressText = { bg = darken(colors.color2, colors.black, 0.1), fg = colors.color2 },
+	LualineProgressSeparator = { bg = colors.black, fg = colors.color2 },
+	LualineBranchIcon = { bg = colors.black, fg = darken(colors.foreground, colors.black, 0.6) },
+	LualineBranchText = { bg = colors.black, fg = darken(colors.foreground, colors.black, 0.6) },
+	LualineLspIcon = { fg = colors.black, bg = colors.color13 },
+	LualineLspText = { fg = colors.color13, bg = darken(colors.color13, colors.black, 0.1) },
+	LualineLspSeparator = { bg = colors.black, fg = colors.color13 },
+
+	-- Grupos inactivos
+	LualineInactiveFilename = { bg = colors.darker, fg = colors.comment },
+	LualineInactiveLocation = { bg = colors.darker, fg = colors.comment },
+
+	-- Nuevos grupos para filetype
+	LualineFiletypeIcon = { bg = colors.color5, fg = colors.black },
+	LualineFiletypeText = { bg = colors.black, fg = colors.color5 },
 }
 
-for name, color in pairs(styles) do
-	theme["Lualine" .. name .. "Icon"] = { fg = colors.darker, bg = color }
-	theme["Lualine" .. name .. "Text"] = { fg = color, bg = darken_bg(color) }
-end
-
 theme.LualineModeText.bold = true
-theme.LualineLocationText.bold = true
 
 for _, section in ipairs({ "a", "b", "c", "x", "y", "z" }) do
 	for _, mode in ipairs({ "normal", "insert", "visual", "command", "replace", "inactive", "terminal" }) do
