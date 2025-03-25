@@ -1,8 +1,8 @@
 local M = {}
 
 M.ui = {
-  theme = 'onenord',
-  transparency = false,
+  theme = 'radium',
+  transparency = true,
 }
 
 return M
