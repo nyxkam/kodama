@@ -43,7 +43,6 @@ return {
 		-- Register key mappings (new spec format)
 		wk.add({
 			{ "<leader>f", group = "file" },
-			{ "<leader>ff", "<cmd>Telescope find_files<cr>", desc = "Find files", mode = "n" },
 		})
 
 		-- Setup automatic documentation
