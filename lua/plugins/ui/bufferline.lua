@@ -53,7 +53,7 @@ return {
 				right = function()
 					return {
 						{
-							text = "%@v:lua.RunBuffer@%#BufferlineRun#  %X",
+							text = "%@v:lua.RunBuffer@%#BufferlineRun#  %X",
 							highlight = "BufferlineRun",
 						},
 						{

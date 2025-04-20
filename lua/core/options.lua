@@ -37,7 +37,7 @@ o.splitright = true
 o.timeoutlen = 400
 o.undofile = true
 o.termguicolors = true
-o.cmdheight = 1
+o.cmdheight = 0
 
 -- interval for writing swap file to disk, also used by gitsigns
 o.updatetime = 250

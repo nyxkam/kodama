@@ -101,7 +101,6 @@ return {
 		vim.lsp.util.open_floating_preview = custom_open_floating_preview
 
 		local servers = {
-			"bashls",
 			"jdtls",
 			"html",
 			"pyright",
@@ -110,7 +109,6 @@ return {
 			"cssls",
 			"texlab",
 			"jsonls",
-			"lemminx",
 			"tailwindcss",
 			"yamlls",
 			"texlab",
@@ -180,18 +178,6 @@ return {
 			filetypes = { "php" },
 		})
 
-		lspconfig.clangd.setup({
-			on_attach = M.on_attach,
-			capabilities = M.capabilities,
-			cmd = { "clangd", "--background-index" },
-			root_dir = lspconfig.util.root_pattern(
-				"compile_commands.json",
-				"compile_flags.txt",
-				"compile_flags.txt",
-				"compile_flags.txt"
-			),
-		})
-
 		lspconfig.omnisharp.setup({
 			on_attach = M.on_attach,
 			capabilities = M.capabilities,
@@ -207,25 +193,6 @@ return {
 			root_dir = function(fname)
 				return lspconfig.util.root_pattern("*.sln", "*.csproj")(fname) or vim.fn.getcwd()
 			end,
-		})
-
-		lspconfig.efm.setup({
-			on_attach = M.on_attach,
-			capabilities = M.capabilities,
-			initialize_options = { documentationFormatting = true },
-			settings = {
-				rootMarkers = { ".git/" },
-				languages = {
-					dosini = {
-						{
-							lintCommand = "ini-lint",
-							lintStdin = true,
-							lintFormats = { "%f:%l:%c: %m" },
-						},
-					},
-				},
-			},
-			filetypes = { "dosini" },
 		})
 
 		lspconfig.sqlls.setup({

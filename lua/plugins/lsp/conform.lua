@@ -20,7 +20,7 @@ return {
 			typescript = { "prettier" },
 			c_sharp = { "csharpier" },
 			json = { "prettier" },
-			yaml = { "prettier" },
+			yaml = { "yamlfmt" },
 			markdown = { "mdformat" },
 			python = { "black" },
 			rust = { "rustfmt" },

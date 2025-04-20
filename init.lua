@@ -19,12 +19,10 @@ require("lazy").setup({
 		{ import = "plugins.git" },
 		{ import = "plugins.ts" },
 		{ import = "plugins.ui" },
-		{ import = "plugins.ia" },
 		{ import = "plugins.dap" },
 		{ import = "plugins.db" },
 		{ import = "plugins.utils" },
 		{ import = "plugins.nvzone" },
-		{ import = "plugins.learn" },
 	},
 })
 

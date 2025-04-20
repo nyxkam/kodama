@@ -29,45 +29,179 @@ local function build_run()
 	local file_extension = vim.fn.expand("%:e")
 	local term_cmd = "bot 10 new | term "
 
-	-- Command table for supported filetypes
-	local supported_filetypes = {
-		html = { default = "live-server ." },
-		c = { default = "gcc % -o $fileBase && ./$fileBase", debug = "gcc -g % -o $fileBase && $fileBase" },
-		cpp = {
-			default = "g++ % -o $fileBase && ./$fileBase",
-			debug = "g++ -g % -o $fileBase",
-			competitive = "g++ -std=c++17 -Wall -DAL -O2 % -o $fileBase && $fileBase",
+	-- Table of action for each language
+	local actions = {
+		c = {
+			run = "$fileBase",
+			compile = "gcc % -o $fileBase",
+			compile_and_run = "gcc % -o $fileBase && $fileBase",
+			debug = function()
+				require("dap").continue()
+				require("dapui").open()
+			end,
 		},
-		py = { default = "python %" },
-		js = { default = "node %", debug = "node --inspect %" },
-		ts = { default = "tsc % && node $fileBase" },
-		rs = { default = "rustc % && $fileBase" },
-		cs = { default = "dotnet run %" },
-		lua = { default = "lua %" },
-		java = { default = "javac % && java $fileBase" },
-		go = { default = "go run %" },
-		tex = { default = "latexmk -pdf %" },
+		cpp = {
+			run = "$fileBase",
+			compile = "g++ % -o $fileBase",
+			compile_and_run = "g++ % -o $fileBase && $fileBase",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		py = {
+			run = "python %",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		js = {
+			run = "node %",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		php = {
+			run = "php %",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		java = {
+			compile = "javac %",
+			run = "java $fileBase",
+			compile_and_run = "javac % && java $fileBase",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		cs = {
+			compile = "mcs %", -- Mono C# compiler
+			run = "mono $fileBase.exe",
+			compile_and_run = "mcs % && mono $fileBase.exe",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		sh = {
+			run = "bash %",
+			debug = function()
+				print("Debugging shell scripts is not supported.")
+			end,
+		},
+		rb = {
+			run = "ruby %",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		go = {
+			run = "go run %",
+			compile = "go build %",
+			compile_and_run = "go run %",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		rust = {
+			compile = "cargo build",
+			run = "cargo run",
+			compile_and_run = "cargo run",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		kotlin = {
+			compile = "kotlinc % -include-runtime -d $fileBase.jar",
+			run = "java -jar $fileBase.jar",
+			compile_and_run = "kotlinc % -include-runtime -d $fileBase.jar && java -jar $fileBase.jar",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		ts = {
+			compile = "tsc %",
+			run = "ts-node %",
+			compile_and_run = "tsc % && node $fileBase.js",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		swift = {
+			compile = "swiftc % -o $fileBase",
+			run = "./$fileBase",
+			compile_and_run = "swiftc % -o $fileBase && ./$fileBase",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
+		zig = {
+			compile = "zig build-exe %",
+			run = "./$fileBase",
+			compile_and_run = "zig build-exe % && ./$fileBase",
+			debug = function()
+				require("dap").continue()
+				require("dapui").toggle()
+			end,
+		},
 	}
 
 	local function execute_command(cmd)
-		vim.cmd(term_cmd .. substitute(cmd))
+		if type(cmd) == "string" then
+			vim.cmd(term_cmd .. substitute(cmd))
+		elseif type(cmd) == "function" then
+			local ok, err = pcall(cmd)
+			if not ok then
+				notify("Error en depuración: " .. err, vim.log.levels.ERROR)
+			end
+		end
 	end
 
-	if not supported_filetypes[file_extension] then
-		notify("The filetype isn't included in the list", vim.log.levels.WARN, { title = "Code Runner" })
+	if not actions[file_extension] then
+		notify("Lenguaje no soportado", vim.log.levels.WARN, { title = "Ejecutor" })
 		return
 	end
 
-	local options = vim.tbl_keys(supported_filetypes[file_extension])
-	if #options == 1 then
-		execute_command(supported_filetypes[file_extension][options[1]])
-		return
-	end
+	vim.ui.select(vim.tbl_keys(actions[file_extension]), {
+		prompt = "Acciones disponibles:",
+		format_item = function(item)
+			local icons = {
+				run = " ",
+				compile = " ",
+				compile_and_run = " ",
+				debug = " ",
+			}
 
-	vim.ui.select(options, { prompt = "Choose a command: " }, function(option)
-		local selected_cmd = supported_filetypes[file_extension][option]
-		if selected_cmd then
-			execute_command(selected_cmd)
+			return icons[item] .. " " .. item:gsub("_", " "):gsub("^%l", string.upper)
+		end,
+	}, function(option)
+		if option then
+			local action = actions[file_extension][option]
+
+			-- For debugging, check dependencies
+			if option == "debug" then
+				if not pcall(require, "dap") then
+					notify("nvim-dap no está instalado", vim.log.levels.ERROR)
+					return
+				end
+
+				-- Run pre-build if necessary
+				if actions[file_extension].compile then
+					execute_command(actions[file_extension].compile)
+				end
+			end
+			execute_command(action)
 		end
 	end)
 end
