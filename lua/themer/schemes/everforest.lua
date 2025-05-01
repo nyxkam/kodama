@@ -26,12 +26,12 @@ M.theme = {
 	color15 = "#d4d5d5",
 }
 
-M.polish_hl = {
-	treesitter = {
-		["@variable"] = { fg = M.theme.color13 },
-		["@property"] = { fg = M.theme.color14 },
-		["@variable.builtin"] = { fg = M.theme.color9 },
-	},
-}
+-- M.polish_hl = {
+-- 	treesitter = {
+-- 		["@variable"] = { fg = M.theme.color13 },
+-- 		["@property"] = { fg = M.theme.color14 },
+-- 		["@variable.builtin"] = { fg = M.theme.color9 },
+-- 	},
+-- }
 
 return M

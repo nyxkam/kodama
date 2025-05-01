@@ -39,6 +39,9 @@ local theme = {
 	LualineLspIcon = { fg = colors.black, bg = colors.color13 },
 	LualineLspText = { fg = colors.color13, bg = darken(colors.color13, colors.black, 0.1) },
 	LualineLspSeparator = { bg = colors.black, fg = colors.color13 },
+	LualineVenvIcon = { fg = colors.black, bg = colors.color11 },
+	LualineVenvText = { fg = colors.color11, bg = darken(colors.color11, colors.black, 0.1) },
+	LualineVenvSeparator = { bg = colors.black, fg = colors.color11 },
 
 	-- Grupos inactivos
 	LualineInactiveFilename = { bg = colors.darker, fg = colors.comment },

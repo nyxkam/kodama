@@ -54,6 +54,7 @@ local icon_colors = {
 	Nushell = colors.color13,
 	Openbox = colors.color5,
 	Xresources = colors.color4,
+	Tex = colors.color12,
 }
 
 local icon_styles = generate_icon_colors(icon_colors)

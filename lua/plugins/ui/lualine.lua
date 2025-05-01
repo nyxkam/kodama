@@ -156,6 +156,24 @@ return {
 						return ""
 					end,
 				},
+
+				{
+					"venv",
+					fmt = function()
+						local venv = vim.env.VIRTUAL_ENV
+						if not venv then
+							return ""
+						end
+
+						local venv_name = vim.fn.fnamemodify(venv, ":t") .. " "
+						return string.format(
+							"%%#LualineVenvSeparator#%s%%#LualineVenvIcon#%s %%#LualineVenvText# %s",
+							"",
+							" ",
+							venv_name
+						)
+					end,
+				},
 			},
 			lualine_y = {
 				{

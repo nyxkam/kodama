@@ -14,7 +14,6 @@ local function reload_neovim_config()
 
 	vim.cmd("silent! source " .. file_path)
 
-	require("plenary.reload").reload_module("themer")
 	require("themer").load_all_highlights()
 	require("plenary.reload").reload_module(module)
 end

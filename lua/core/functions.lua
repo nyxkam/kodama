@@ -155,6 +155,11 @@ local function build_run()
 				require("dapui").toggle()
 			end,
 		},
+		tex = {
+			compile = "!pdflatex $fileBase",
+			run = "!pdflatex $fileBase",
+			compile_and_run = "!pdflatex $fileBase",
+		},
 	}
 
 	local function execute_command(cmd)

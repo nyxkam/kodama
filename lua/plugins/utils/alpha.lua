@@ -156,13 +156,13 @@ return {
 
 			return {
 				"  Plugins: " .. plugins_count,
-				"⏳ Time: " .. string.format("%.2f", time_start) .. "ms",
+				"󱦟 Time: " .. string.format("%.2f", time_start) .. "ms",
 			}
 		end
 
 		dashboard.section.footer.val = {
 			"  Cargando plugins...",
-			"⏳ Esperando datos...",
+			"󱦠  Esperando datos...",
 		}
 
 		vim.defer_fn(function()
