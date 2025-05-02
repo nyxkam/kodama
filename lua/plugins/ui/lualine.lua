@@ -20,24 +20,39 @@ return {
 							i = "INSERT",
 							v = "VISUAL",
 							V = "V-LINE",
-							[""] = "V-BLOCK", -- Ctrl+V
+							["␖"] = "V-BLOCK",
 							t = "TERMINAL",
 							c = "COMMAND",
 							R = "REPLACE",
 							s = "SELECT",
 							S = "S-LINE",
-							[""] = "S-BLOCK",
+							["␓"] = "S-BLOCK",
 						}
 
 						local current_mode = vim.fn.mode()
-						local mode = mode_map[current_mode] or current_mode:upper()
+						local mode_name = mode_map[current_mode] or current_mode:upper()
+
+						local highlight_mode = ({
+							n = "Normal",
+							i = "Insert",
+							v = "Visual",
+							V = "Visual",
+							["␖"] = "Visual",
+							t = "Terminal",
+							c = "Command",
+							R = "Replace",
+							s = "Select",
+							S = "Select",
+							["␓"] = "Select",
+						})[current_mode] or "Normal"
 
 						return string.format(
-							"%%#LualineModeIcon#%s %%#LualineModeSeparator#%s %%#LualineModeText#%s %%#LualineModeSeparator2#%s",
-							"",
-							"",
-							mode,
-							""
+							"%%#LualineMode%sIcon# %%#LualineMode%sSeparator# %%#LualineMode%sText#%s %%#LualineMode%sSeparator2#",
+							highlight_mode,
+							highlight_mode,
+							highlight_mode,
+							mode_name,
+							highlight_mode
 						)
 					end,
 				},
