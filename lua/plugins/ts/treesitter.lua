@@ -67,7 +67,7 @@ return {
 		-- Configuración de textobjects
 		textobjects = {
 			select = {
-				enable = true,
+				enable = false,
 				lookahead = true,
 				keymaps = {
 					["af"] = "@function.outer",
@@ -83,5 +83,6 @@ return {
 
 	dependencies = {
 		"nvim-treesitter/nvim-treesitter-textobjects",
+		event = "VeryLazy",
 	},
 }
